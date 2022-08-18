@@ -1,0 +1,176 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > schedularJava</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.projectslackbot</a>
+</div>
+
+<h1>Coverage Summary for Class: schedularJava (com.example.projectslackbot)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">schedularJava</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.example.projectslackbot;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import org.apache.log4j.BasicConfigurator;
+<i class="no-highlight">4</i>&nbsp;//import org.quartz.CronScheduleBuilder;
+<i class="no-highlight">5</i>&nbsp;import org.quartz.*;
+<i class="no-highlight">6</i>&nbsp;import org.quartz.impl.StdSchedulerFactory;
+<i class="no-highlight">7</i>&nbsp;import static org.quartz.TriggerBuilder.*;
+<i class="no-highlight">8</i>&nbsp;import java.util.Date;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;
+<b class="fc"><i class="no-highlight">11</i>&nbsp;public class schedularJava {</b>
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;
+<b class="fc"><i class="no-highlight">14</i>&nbsp;    private static String NAME_OF_JOB = &quot;Job1&quot;;</b>
+<b class="fc"><i class="no-highlight">15</i>&nbsp;    private static String NAME_OF_GROUP = &quot;group1&quot;;</b>
+<b class="fc"><i class="no-highlight">16</i>&nbsp;    private static String NAME_OF_TRIGGER = &quot;triggerStart&quot;;</b>
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    //create variable scheduler of type Scheduler
+<i class="no-highlight">19</i>&nbsp;    public static Scheduler scheduler;
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    public int schedularevent(int i,String j,String g,String tr,String tg) throws Exception
+<i class="no-highlight">22</i>&nbsp;    {
+<i class="no-highlight">23</i>&nbsp;
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        NAME_OF_JOB = j;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        NAME_OF_GROUP =g;</b>
+<i class="no-highlight">26</i>&nbsp;
+<b class="fc"><i class="no-highlight">27</i>&nbsp;        BasicConfigurator.configure();</b>
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;        //show message to know about the main thread
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        System.out.println(&quot; The name of the QuartzScheduler main thread is: &quot; + Thread.currentThread().getName());</b>
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;        //initialize scheduler instance from Quartz
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        scheduler = new StdSchedulerFactory().getScheduler();</b>
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;        //start scheduler
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        scheduler.start();</b>
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;        //create scheduler trigger based on the time interval
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        TimerClock t = new TimerClock();</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        t.addMinutes(i);</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        Date d = new Date();</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        d.setHours(t.getHour());</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        d.setMinutes(t.getMinutes());</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        d.setSeconds(t.getSeconds());</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        Trigger triggerNew =createTrigger(d,j,g,tr,tg);</b>
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;        //schedule trigger
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        scheduleJob(triggerNew);</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        return 1;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;    //create scheduleJob() method to schedule a job
+<i class="no-highlight">52</i>&nbsp;    private static int scheduleJob(Trigger triggerNew) throws Exception {
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;        //create an instance of the JoDetails to connect Quartz job to the CreateQuartzJob
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        JobDetail jobInstance = JobBuilder.newJob(createQuartsJob.class).withIdentity(NAME_OF_JOB, NAME_OF_GROUP).build();</b>
+<i class="no-highlight">56</i>&nbsp;
+<i class="no-highlight">57</i>&nbsp;        //invoke scheduleJob method to connect the Quartz scheduler to the jobInstance and the triggerNew
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        scheduler.scheduleJob(jobInstance, triggerNew);</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        return 1;</b>
+<i class="no-highlight">60</i>&nbsp;    }
+<i class="no-highlight">61</i>&nbsp;    //create createTrigger() method that returns a trigger based on the time interval
+<i class="no-highlight">62</i>&nbsp;    private static Trigger createTrigger(Date d,String m,String n,String tr,String tg) {
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        System.out.println(d);</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        SimpleTrigger trigger = (SimpleTrigger) newTrigger()</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;                .withIdentity(tr, tg)</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;                .startAt(d)</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;                .forJob(m,n)</b>
+<b class="fc"><i class="no-highlight">68</i>&nbsp;                .build();</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        return trigger;</b>
+<i class="no-highlight">70</i>&nbsp;    }
+<i class="no-highlight">71</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-08-18 23:15</div>
+</div>
+</body>
+</html>
